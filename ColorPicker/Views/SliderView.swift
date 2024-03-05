@@ -33,7 +33,7 @@ struct SliderView: View {
             TextField("", value: $displayedValue, format: .number)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 50)
-                .keyboardType(.decimalPad)
+                .keyboardType(.numberPad)
         }
         
         

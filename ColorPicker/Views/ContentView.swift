@@ -67,6 +67,8 @@ struct ContentView: View {
                     redSliderValue = redValue
                     greenSliderValue = greenValue
                     blueSliderValue = blueValue
+                    
+                    textFieldFocus = false
                 }
             }
         }
