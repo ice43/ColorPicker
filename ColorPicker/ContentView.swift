@@ -12,6 +12,12 @@ struct ContentView: View {
     @State private var greenSliderValue = 255.0
     @State private var blueSliderValue = 255.0
     
+    @State private var redValue = 255.0
+    @State private var greenValue = 255.0
+    @State private var blueValue = 255.0
+    
+    @FocusState private var textFieldFocus: Bool
+    
     var body: some View {
         ZStack {
             Color.specialBlue
@@ -26,22 +32,47 @@ struct ContentView: View {
                 
                 VStack {
                     SliderView(
-                        sliderValue: $redSliderValue,
+                        sliderValue: $redSliderValue, displayedValue: $redValue,
                         color: .red
                     )
+                    .focused($textFieldFocus)
+                    
                     SliderView(
-                        sliderValue: $greenSliderValue,
+                        sliderValue: $greenSliderValue, displayedValue: $greenValue,
                         color: .green
                     )
+                    .focused($textFieldFocus)
+                    
                     SliderView(
-                        sliderValue: $blueSliderValue,
+                        sliderValue: $blueSliderValue, displayedValue: $blueValue,
                         color: .blue
                     )
+                    .focused($textFieldFocus)
                 }
                 
                 Spacer()
             }
             .padding()
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                Spacer()
+            }
+            ToolbarItem(placement: .keyboard) {
+                Button("Done") {
+                    redSliderValue = redValue
+                    greenSliderValue = greenValue
+                    blueSliderValue = blueValue
+                }
+            }
+        }
+        
+        .onTapGesture {
+            textFieldFocus = false
+            redSliderValue = redValue
+            greenSliderValue = greenValue
+            blueSliderValue = blueValue
         }
         
     }
