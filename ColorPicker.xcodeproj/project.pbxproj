@@ -34,6 +34,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD4E64242B971EB100469432 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CDAE39A32B95DF22004E77B4 /* ColorPickerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CD4E64252B971EBF00469432 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CDAE39A52B95DF22004E77B4 /* ContentView.swift */,
+				CDAE39B12B95E375004E77B4 /* SliderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CD4E64262B971EC600469432 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CDAE39A72B95DF23004E77B4 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CDAE39972B95DF22004E77B4 = {
 			isa = PBXGroup;
 			children = (
@@ -53,10 +78,9 @@
 		CDAE39A22B95DF22004E77B4 /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				CDAE39A32B95DF22004E77B4 /* ColorPickerApp.swift */,
-				CDAE39A52B95DF22004E77B4 /* ContentView.swift */,
-				CDAE39B12B95E375004E77B4 /* SliderView.swift */,
-				CDAE39A72B95DF23004E77B4 /* Assets.xcassets */,
+				CD4E64242B971EB100469432 /* App */,
+				CD4E64252B971EBF00469432 /* Views */,
+				CD4E64262B971EC600469432 /* Resources */,
 				CDAE39A92B95DF23004E77B4 /* Preview Content */,
 			);
 			path = ColorPicker;

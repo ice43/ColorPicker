@@ -32,19 +32,22 @@ struct ContentView: View {
                 
                 VStack {
                     SliderView(
-                        sliderValue: $redSliderValue, displayedValue: $redValue,
+                        sliderValue: $redSliderValue,
+                        displayedValue: $redValue,
                         color: .red
                     )
                     .focused($textFieldFocus)
                     
                     SliderView(
-                        sliderValue: $greenSliderValue, displayedValue: $greenValue,
+                        sliderValue: $greenSliderValue,
+                        displayedValue: $greenValue,
                         color: .green
                     )
                     .focused($textFieldFocus)
                     
                     SliderView(
-                        sliderValue: $blueSliderValue, displayedValue: $blueValue,
+                        sliderValue: $blueSliderValue,
+                        displayedValue: $blueValue,
                         color: .blue
                     )
                     .focused($textFieldFocus)

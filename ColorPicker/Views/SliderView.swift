@@ -37,7 +37,7 @@ struct SliderView: View {
         }
         
         
-        .alert("Wrong format",
+        .alert("Error",
                isPresented: $isShowingAlert,
                actions: {
             Button("OK", role: .cancel) {
