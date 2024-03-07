@@ -79,7 +79,16 @@ private extension ContentView {
     }
         
     func previousField() {
-            
+        switch textFieldFocus {
+        case .red:
+            textFieldFocus = .blue
+        case .green:
+            textFieldFocus = .red
+        case .blue:
+            textFieldFocus = .green
+        case .none:
+            textFieldFocus = nil
+        }
     }
 }
 
