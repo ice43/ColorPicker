@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var green = Double.random(in: 0...255).rounded()
     @State private var blue = Double.random(in: 0...255).rounded()
     
-    @FocusState private var textFieldFocus: Bool
+    @FocusState private var textFieldFocus: Field?
     
     var body: some View {
         ZStack {
@@ -25,16 +25,24 @@ struct ContentView: View {
                 
                 VStack {
                     SliderView(sliderValue: $red, color: .red)
+                        .focused($textFieldFocus, equals: .red)
                     SliderView(sliderValue: $green, color: .green)
+                        .focused($textFieldFocus, equals: .green)
                     SliderView(sliderValue: $blue, color: .blue)
+                        .focused($textFieldFocus, equals: .blue)
                 }
                 .frame(height: 150)
-                .focused($textFieldFocus)
                 .toolbar {
                     ToolbarItemGroup(placement: .keyboard) {
+                        Button(action: previousField){
+                            Image(systemName: "chevron.up")
+                        }
+                        Button(action: nextField){
+                            Image(systemName: "chevron.down")
+                        }
                         Spacer()
                         Button("Done") {
-                            textFieldFocus = false
+                            textFieldFocus = nil
                         }
                     }
                 }
@@ -45,8 +53,33 @@ struct ContentView: View {
         .padding()
         .background(.specialBlue)
         .onTapGesture {
-            textFieldFocus = false
+            textFieldFocus = nil
         }
+    }
+}
+
+private extension ContentView {
+    enum Field {
+        case red
+        case green
+        case blue
+    }
+    
+    func nextField() {
+        switch textFieldFocus {
+        case .red:
+            textFieldFocus = .green
+        case .green:
+            textFieldFocus = .blue
+        case .blue:
+            textFieldFocus = .red
+        case .none:
+            textFieldFocus = nil
+        }
+    }
+        
+    func previousField() {
+            
     }
 }
 
