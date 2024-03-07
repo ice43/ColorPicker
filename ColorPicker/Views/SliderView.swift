@@ -9,54 +9,46 @@ import SwiftUI
 
 struct SliderView: View {
     @Binding var sliderValue: Double
-    @Binding var displayedValue: Double
-    
-    @State private var isShowingAlert = false
-    
     let color: Color
+    
+    @State private var text = ""
+    @State private var isShowingAlert = false
     
     var body: some View {
         HStack {
             Text(sliderValue.formatted())
                 .foregroundStyle(.white)
-                .frame(width: 35)
+                .frame(width: 35, alignment: .leading)
             
-            Slider(value: Binding(get: {
-                sliderValue
-            }, set: { newValue in
-                sliderValue = newValue
-                displayedValue = newValue
-            }), in: 0...255, step: 1)
+            Slider(value: $sliderValue, in: 0...255, step: 1)
                 .tint(color)
-                .animation(.easeInOut(duration: 2.0), value: sliderValue)
+                .onChange(of: sliderValue) { _, newValue in
+                    text = newValue.formatted()
+                }
             
-            TextField("", value: $displayedValue, format: .number)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 50)
-                .keyboardType(.numberPad)
+            TextFieldView(text: $text, action: checkValue)
+                .alert("Wrong format!", isPresented: $isShowingAlert, actions: {} ) {
+                    Text("Please enter value from 0 to 255")
+                }
+                
         }
         
-        
-        .alert("Error",
-               isPresented: $isShowingAlert,
-               actions: {
-            Button("OK", role: .cancel) {
-                displayedValue = sliderValue
-            }
-        },
-               message: {
-            Text("Please enter a number from 0 to 255")
-        })
-        
-        .onChange(of: sliderValue) { _, newValue in
-            if newValue > 255 {
-                isShowingAlert = true
-                sliderValue = 255
-            }
+        .onAppear {
+            text = sliderValue.formatted()
+        }
+    }
+    
+    private func checkValue() {
+        if let value = Double(text), (0...255).contains(value) {
+            sliderValue = value
+        } else {
+            isShowingAlert.toggle()
+            sliderValue = 0
+            text = ""
         }
     }
 }
 
 #Preview {
-    SliderView(sliderValue: .constant(125), displayedValue: .constant(125), color: .red)
+    SliderView(sliderValue: .constant(125), color: .red)
 }

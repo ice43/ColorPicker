@@ -8,101 +8,48 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var redSliderValue = 255.0
-    @State private var greenSliderValue = 255.0
-    @State private var blueSliderValue = 255.0
-    
-    @State private var redValue = 255.0
-    @State private var greenValue = 255.0
-    @State private var blueValue = 255.0
+    @State private var red = Double.random(in: 0...255).rounded()
+    @State private var green = Double.random(in: 0...255).rounded()
+    @State private var blue = Double.random(in: 0...255).rounded()
     
     @FocusState private var textFieldFocus: Bool
     
     var body: some View {
         ZStack {
-            Color.specialBlue
-                .ignoresSafeArea()
-            
             VStack(spacing: 50) {
                 ColorView(
-                    redSliderValue: $redSliderValue,
-                    greenSliderValue: $greenSliderValue,
-                    blueSliderValue: $blueSliderValue
+                    redSliderValue: red,
+                    greenSliderValue: green,
+                    blueSliderValue: blue
                 )
                 
                 VStack {
-                    SliderView(
-                        sliderValue: $redSliderValue,
-                        displayedValue: $redValue,
-                        color: .red
-                    )
-                    .focused($textFieldFocus)
-                    
-                    SliderView(
-                        sliderValue: $greenSliderValue,
-                        displayedValue: $greenValue,
-                        color: .green
-                    )
-                    .focused($textFieldFocus)
-                    
-                    SliderView(
-                        sliderValue: $blueSliderValue,
-                        displayedValue: $blueValue,
-                        color: .blue
-                    )
-                    .focused($textFieldFocus)
+                    SliderView(sliderValue: $red, color: .red)
+                    SliderView(sliderValue: $green, color: .green)
+                    SliderView(sliderValue: $blue, color: .blue)
                 }
-                
+                .frame(height: 150)
+                .focused($textFieldFocus)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button("Done") {
+                            textFieldFocus = false
+                        }
+                    }
+                }
+
                 Spacer()
             }
-            .padding()
         }
-        
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button("Done") {
-                    redSliderValue = redValue
-                    greenSliderValue = greenValue
-                    blueSliderValue = blueValue
-                    
-                    textFieldFocus = false
-                }
-            }
-        }
-        
+        .padding()
+        .background(.specialBlue)
         .onTapGesture {
             textFieldFocus = false
-            redSliderValue = redValue
-            greenSliderValue = greenValue
-            blueSliderValue = blueValue
         }
-        
     }
 }
 
 #Preview {
     ContentView()
-}
-
-
-struct ColorView: View {
-    @Binding var redSliderValue: Double
-    @Binding var greenSliderValue: Double
-    @Binding var blueSliderValue: Double
-    
-    var body: some View {
-        Color(
-            red: redSliderValue / 255,
-            green: greenSliderValue / 255,
-            blue: blueSliderValue / 255
-        )
-        .frame(width: 350, height: 120)
-        .clipShape(RoundedRectangle(cornerRadius: 25))
-        .overlay(
-            RoundedRectangle(cornerRadius: 25)
-                .stroke(.white, lineWidth: 4))
-    }
 }
